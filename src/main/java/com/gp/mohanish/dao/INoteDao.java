@@ -19,4 +19,6 @@ public interface INoteDao {
 
 	public boolean removeNoteById(Long noteId, Long userId);
 
+	public boolean modifyNote(Note note, Long userId);
+
 }

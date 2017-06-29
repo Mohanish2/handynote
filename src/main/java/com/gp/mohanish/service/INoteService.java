@@ -15,7 +15,9 @@ public interface INoteService {
 
 	public List<Note> getAllNotes(Long userId);
 
-	public boolean removeNoteById(Long id, Long id2);
+	public boolean removeNoteById(Long noteId, Long userId);
+
+	public boolean modifyNote(Note note, Long userId);
 	
 
 }

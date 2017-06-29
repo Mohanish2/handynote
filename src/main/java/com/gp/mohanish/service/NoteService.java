@@ -30,4 +30,7 @@ public class NoteService implements INoteService{
 		return iNoteDao.removeNoteById(noteId, userId);
 	}
 	
+	public boolean modifyNote(Note note, Long userId){
+		return iNoteDao.modifyNote(note,userId);
+	}
 }

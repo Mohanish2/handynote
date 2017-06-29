@@ -45,4 +45,22 @@ public class NoteDao implements INoteDao {
 		return false;
 	}
 	
+	public boolean modifyNote(Note note, Long userId){
+		Session session = sessionFactory.getCurrentSession();
+		Long noteId = note.getId();
+		Note dbNote = (Note) session.get(Note.class, noteId);
+		if(dbNote!=null && userId.equals(dbNote.getUser().getId())){
+			Query query = session.createQuery("update Note set title = :title, description = :description " + " where id = :noteid");
+			query.setString("title", note.getTitle());
+			query.setString("description", note.getDescription());
+			query.setParameter("noteid", note.getId());
+			query.executeUpdate();
+			
+			/*session.evict(dbNote);
+			session.saveOrUpdate(note);*/
+			return true;
+		}
+		return false;
+	}
+	
 }

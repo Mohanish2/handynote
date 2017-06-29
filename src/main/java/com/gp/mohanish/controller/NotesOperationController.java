@@ -1,5 +1,6 @@
 package com.gp.mohanish.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,6 +81,25 @@ public class NotesOperationController {
 	    	return new ResponseEntity<String>("Note removed from database", HttpStatus.OK);
 	    }else{
 	    	return new ResponseEntity<String>("Note can not be removed from database", HttpStatus.BAD_REQUEST);
+	    }
+	}
+	
+	@RequestMapping(value = "/modifyNote", method = RequestMethod.POST, consumes = {"application/json"})
+	public ResponseEntity<String> modifyNote(@RequestHeader("Authorization") String credentials,@RequestBody Note note) {
+		User user = null;		
+	    String[] userObj = AuthHelper.getUserDetailsFromAuthHelper(credentials);
+	    if(userObj != null && userObj.length > 0 ){
+	    	user = iUserService.getUser(userObj);
+	    }
+	    boolean updation = false;
+	    if(user != null && note != null && note.getId()!= null){
+	    	note.setModified_at(new Date());
+	    	updation = iNoteService.modifyNote(note,user.getId());
+	    }
+	    if(updation){
+	    	return new ResponseEntity<String>("Note updates successfully", HttpStatus.OK);
+	    }else{
+	    	return new ResponseEntity<String>("Invalid user/note information provided", HttpStatus.BAD_REQUEST);
 	    }
 	}
 	
