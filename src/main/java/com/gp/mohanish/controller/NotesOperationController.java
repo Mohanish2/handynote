@@ -1,5 +1,7 @@
 package com.gp.mohanish.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,6 +49,21 @@ public class NotesOperationController {
 	    	return new ResponseEntity<String>("Note successfully added", HttpStatus.OK);
 	    }
 	    return new ResponseEntity<String>("Invalid information provided", HttpStatus.BAD_REQUEST);
+	}
+	
+	@RequestMapping(value = "/getAllNotesByUser", method = RequestMethod.GET)
+	public ResponseEntity<List<Note>> getAllNotesByUser(@RequestHeader("Authorization") String credentials) {
+		User user = null;		
+	    String[] userObj = AuthHelper.getUserDetailsFromAuthHelper(credentials);
+	    if(userObj != null && userObj.length > 0 ){
+	    	user = iUserService.getUser(userObj);
+	    }
+	    List<Note> notes = null;
+	    if(user !=  null){
+	    	notes = iNoteService.getAllNotes(user.getId());
+	    	return new ResponseEntity<List<Note>>(notes, HttpStatus.OK);	  
+	    }
+	    return new ResponseEntity<List<Note>>(HttpStatus.NO_CONTENT);
 	}
 	
 }

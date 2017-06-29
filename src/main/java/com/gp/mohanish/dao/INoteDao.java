@@ -3,6 +3,8 @@
  */
 package com.gp.mohanish.dao;
 
+import java.util.List;
+
 import com.gp.mohanish.model.Note;
 
 /**
@@ -12,5 +14,7 @@ import com.gp.mohanish.model.Note;
 public interface INoteDao {
 
 	public void addNewNote(Note note);
+
+	public List<Note> getAllNotes(Long userId);
 
 }

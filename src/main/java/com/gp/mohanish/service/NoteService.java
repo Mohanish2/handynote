@@ -22,4 +22,8 @@ public class NoteService implements INoteService{
 		iNoteDao.addNewNote(note);
 	}
 	
+	public List<Note> getAllNotes(Long userId) {
+		return iNoteDao.getAllNotes(userId);
+	}
+	
 }
