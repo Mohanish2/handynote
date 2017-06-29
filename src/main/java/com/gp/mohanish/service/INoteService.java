@@ -14,6 +14,8 @@ public interface INoteService {
 	public void addNewNote(Note note);
 
 	public List<Note> getAllNotes(Long userId);
+
+	public boolean removeNoteById(Long id, Long id2);
 	
 
 }

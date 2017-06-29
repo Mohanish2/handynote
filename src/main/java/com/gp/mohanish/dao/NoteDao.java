@@ -35,4 +35,14 @@ public class NoteDao implements INoteDao {
 		return notesList;
 	}
 	
+	public boolean removeNoteById(Long noteId, Long userId){
+		Session session = sessionFactory.getCurrentSession();
+		Query q = session.createQuery("delete Note where id = "+noteId+" where user_id = "+userId);
+		int noOfDeletedInstances = q.executeUpdate();
+		if(noOfDeletedInstances>0){
+			return true;
+		}
+		return false;
+	}
+	
 }

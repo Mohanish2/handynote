@@ -26,4 +26,8 @@ public class NoteService implements INoteService{
 		return iNoteDao.getAllNotes(userId);
 	}
 	
+	public boolean removeNoteById(Long noteId, Long userId){
+		return iNoteDao.removeNoteById(noteId, userId);
+	}
+	
 }

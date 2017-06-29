@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -64,6 +65,22 @@ public class NotesOperationController {
 	    	return new ResponseEntity<List<Note>>(notes, HttpStatus.OK);	  
 	    }
 	    return new ResponseEntity<List<Note>>(HttpStatus.NO_CONTENT);
+	}
+	
+	@RequestMapping(value="removeNoteById/{id}", method=RequestMethod.GET)
+	public ResponseEntity<String> removeNoteById(@RequestHeader("Authorization") String credentials,@PathVariable("id") Long id) {
+		User user = null;		
+	    String[] userObj = AuthHelper.getUserDetailsFromAuthHelper(credentials);
+	    if(userObj != null && userObj.length > 0 ){
+	    	user = iUserService.getUser(userObj);
+	    }
+	    
+	    boolean removal = iNoteService.removeNoteById(id,user.getId());
+	    if(removal){
+	    	return new ResponseEntity<String>("Note removed from database", HttpStatus.OK);
+	    }else{
+	    	return new ResponseEntity<String>("Note can not be removed from database", HttpStatus.BAD_REQUEST);
+	    }
 	}
 	
 }
