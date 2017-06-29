@@ -1,0 +1,22 @@
+-prerequisite for these below curl commands:
+
+insert into user(email,password,created_at,modified_at) values('gp@gmail.com','password',now(),now());
+
+
+-curl commands :
+
+1) add note against user credentials :
+
+Example : curl -H "Content-Type:application/json" -X POST -u gp@gmail.com:password http://localhost:8080/handynote/addNewNote -d '{"title":"mohanish note","description":"This is a test note by mohanish"}'
+
+2) Display all notes against user credentials :
+
+Example : curl -H "Content-Type:application/json" -X GET -u gp@gmail.com:password http://localhost:8080/handynote/getAllNotesByUser
+
+3) delete note against user credentials
+
+Example : curl -H "Content-Type:application/json" -X GET -u gp@gmail.com:password http://localhost:8080/handynote/removeNoteById/2
+
+4) update note against user credentials
+
+Example : curl -H "Content-Type:application/json" -X POST -u gp@gmail.com:password http://localhost:8080/handynote/modifyNote -d '{"id":"1","title":"mohanish update", "description":"mohanish update desc"}'
